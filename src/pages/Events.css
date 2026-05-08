@@ -1,0 +1,451 @@
+/* ── Layout ──────────────────────────────────────────────── */
+.ev-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  overflow-y: auto;
+  padding: 32px;
+  background: white;
+  box-sizing: border-box;
+  text-align: left;
+  min-width: 0;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.ev-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.ev-header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.ev-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+}
+
+.ev-subtitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: 32px;
+}
+
+.ev-download-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--primary, #3a5486);
+  border: 1px solid var(--primary, #3a5486);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary-foreground, white);
+  cursor: pointer;
+  line-height: 32px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ev-download-btn:hover {
+  opacity: 0.9;
+}
+
+/* ── Filters ─────────────────────────────────────────────── */
+.ev-filters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ev-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  background: none;
+}
+
+.ev-search-icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+  color: var(--foreground, #121212);
+}
+
+.ev-search-input {
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+  font-family: inherit;
+  width: 240px;
+}
+
+.ev-search-input::placeholder {
+  color: var(--foreground, #121212);
+  opacity: 0.35;
+}
+
+.ev-search-input:focus {
+  outline: none;
+}
+
+.ev-search-wrap:focus-within {
+  border-color: var(--primary, #3a5486);
+}
+
+.ev-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: none;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  cursor: pointer;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+.ev-filter-btn:hover,
+.ev-filter-btn--active {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.ev-filter-wrap {
+  position: relative;
+}
+
+.ev-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 100;
+  background: white;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  min-width: 200px;
+  overflow: hidden;
+}
+
+.ev-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border-token, #d2d2d2);
+}
+
+.ev-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.ev-dropdown-item:hover {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.ev-dropdown-item--active {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.ev-clear-btn {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  cursor: pointer;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+.ev-clear-btn:hover {
+  opacity: 0.7;
+}
+
+/* ── Table ───────────────────────────────────────────────── */
+.ev-table-wrap {
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ev-thead,
+.ev-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+}
+
+.ev-thead {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: var(--soft-background, #fdfdfd);
+  border-bottom: 1px solid var(--border-token, #d2d2d2);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+}
+
+.ev-row {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.ev-row--border {
+  border-top: 1px solid var(--border-token, #d2d2d2);
+}
+
+/* ── Column widths ───────────────────────────────────────── */
+.ev-col { display: flex; flex-direction: column; justify-content: center; }
+
+.ev-col-dot      { flex: 0 0 64px;  align-items: center; }
+.ev-col-start    { flex: 0 0 160px; }
+.ev-col-end      { flex: 0 0 160px; }
+.ev-col-line     { flex: 0 0 236px; }
+.ev-col-class    { flex: 0 0 224px; }
+.ev-col-duration { flex: 0 0 128px; }
+.ev-col-status   { flex: 1; min-width: 0; }
+.ev-col-actions  { flex: 0 0 92px; align-items: flex-end; }
+
+/* ── Status dot ──────────────────────────────────────────── */
+.ev-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  cursor: default;
+}
+
+.ev-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--foreground, #121212);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.ev-dot:hover::after {
+  opacity: 1;
+}
+
+/* ── Time cells ──────────────────────────────────────────── */
+.ev-time-bold {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+.ev-time-sub {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+/* ── Line cell ───────────────────────────────────────────── */
+.ev-line-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+.ev-line-type {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+/* ── Badge ───────────────────────────────────────────────── */
+.ev-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 32px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.7;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+/* ── Duration ────────────────────────────────────────────── */
+.ev-duration {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+/* ── Dash ────────────────────────────────────────────────── */
+.ev-dash {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: 32px;
+}
+
+/* ── View button ─────────────────────────────────────────── */
+.ev-view-btn {
+  padding: 8px 24px;
+  background: none;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  cursor: pointer;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+.ev-view-btn:hover {
+  background: var(--soft-background, #fdfdfd);
+}
+
+/* ── Calendar filter ─────────────────────────────────────── */
+.ev-calendar-popup {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 100;
+  background: white;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  width: 280px;
+}
+
+.ev-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ev-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--foreground, #121212);
+}
+
+.ev-cal-nav:hover {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.ev-cal-month {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground, #121212);
+}
+
+.ev-cal-divider {
+  height: 1px;
+  background: var(--border-token, #d2d2d2);
+  margin-bottom: 12px;
+}
+
+.ev-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.ev-cal-day-name {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground, #121212);
+  opacity: 0.5;
+  padding: 4px 0;
+}
+
+.ev-cal-date {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ev-cal-date:hover:not(:disabled) {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.ev-cal-date--selected {
+  background: var(--primary, #3a5486) !important;
+  color: white;
+}
+
+.ev-cal-date--empty {
+  visibility: hidden;
+  cursor: default;
+}

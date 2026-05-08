@@ -1,0 +1,473 @@
+/* ── Backdrop ────────────────────────────────────────────── */
+.dr-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 40;
+  animation: dr-fade-in 0.2s ease;
+}
+
+@keyframes dr-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Panel ───────────────────────────────────────────────── */
+.dr-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 673px;
+  background: var(--background, #ffffff);
+  border-left: 1px solid var(--border-token, #d2d2d2);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  animation: dr-slide-in 0.25s ease;
+  text-align: left;
+}
+
+@keyframes dr-slide-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Close button ────────────────────────────────────────── */
+.dr-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--foreground, #121212);
+  z-index: 1;
+}
+
+.dr-close-btn:hover {
+  background: var(--accent-token, #f2f4f7);
+}
+
+/* ── Scrollable body ─────────────────────────────────────── */
+.dr-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  padding: 32px;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.dr-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dr-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+}
+
+.dr-subtitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: normal;
+}
+
+/* ── Field group ─────────────────────────────────────────── */
+.dr-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dr-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+}
+
+.dr-input {
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  background: var(--background, #ffffff);
+  box-sizing: border-box;
+  line-height: 32px;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.dr-input::placeholder {
+  opacity: 0.5;
+  color: var(--foreground, #121212);
+}
+
+.dr-input:focus {
+  outline: none;
+  border-color: var(--primary, #3a5486);
+}
+
+/* ── Select ──────────────────────────────────────────────── */
+.dr-select-container {
+  position: relative;
+}
+
+.dr-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--background, #ffffff);
+}
+
+.dr-select-val {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+  opacity: 0.5;
+}
+
+.dr-select-val--selected {
+  opacity: 1;
+}
+
+.dr-select-icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+  color: var(--foreground, #121212);
+}
+
+.dr-select-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: white;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.dr-select-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-token, #d2d2d2);
+}
+
+.dr-select-item:last-child {
+  border-bottom: none;
+}
+
+.dr-select-item:hover {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.dr-select-item--active {
+  background: var(--accent-token, #f2f4f7);
+}
+
+/* ── Section card ────────────────────────────────────────── */
+.dr-section {
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 8px;
+}
+
+.dr-section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--soft-background, #fdfdfd);
+  border-radius: 8px 8px 0 0;
+}
+
+.dr-step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: var(--background, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+}
+
+.dr-section-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dr-section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+}
+
+.dr-section-sub {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--foreground, #121212);
+  opacity: 0.7;
+  line-height: normal;
+}
+
+.dr-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background: var(--background, #ffffff);
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--foreground, #121212);
+}
+
+.dr-add-btn:hover {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.dr-row-divider {
+  height: 1px;
+  background: var(--border-token, #d2d2d2);
+}
+
+/* ── Time row ────────────────────────────────────────────── */
+.dr-time-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 24px;
+}
+
+.dr-time-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Time column (label + field) ─────────────────────────── */
+.dr-time-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 184px;
+  flex-shrink: 0;
+}
+
+.dr-field-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+}
+
+.dr-time-picker {
+  position: relative;
+}
+
+.dr-time-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 4px;
+  background: var(--background, #ffffff);
+  cursor: pointer;
+}
+
+.dr-time-value {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  line-height: 32px;
+}
+
+.dr-clock-icon {
+  flex-shrink: 0;
+  opacity: 0.5;
+  color: var(--foreground, #121212);
+}
+
+.dr-time-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: white;
+  border: 1px solid var(--border-token, #d2d2d2);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-height: calc(6 * 40px);
+  overflow-y: auto;
+}
+
+.dr-time-item {
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--foreground, #121212);
+  cursor: pointer;
+  line-height: 24px;
+  border-bottom: 1px solid var(--border-token, #d2d2d2);
+}
+
+.dr-time-item:last-child {
+  border-bottom: none;
+}
+
+.dr-time-item:hover {
+  background: var(--accent-token, #f2f4f7);
+}
+
+.dr-time-item--active {
+  background: var(--accent-token, #f2f4f7);
+}
+
+/* ── Delete row button ───────────────────────────────────── */
+.dr-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--destructive, #e2454c);
+}
+
+.dr-delete-btn:hover {
+  background: var(--soft-red, #fef2f2);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.dr-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 32px;
+  border-top: 1px solid var(--border-token, #d2d2d2);
+  background: var(--background, #ffffff);
+}
+
+.dr-footer-left {
+  flex: 1;
+}
+
+.dr-footer-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.dr-delete-line-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: none;
+  border: 1px solid var(--destructive, #e2454c);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--destructive, #e2454c);
+  cursor: pointer;
+  line-height: 32px;
+  font-family: inherit;
+}
+
+.dr-delete-line-btn:hover {
+  background: var(--soft-red, #fef2f2);
+}
+
+.dr-cancel-btn {
+  padding: 8px 16px;
+  background: none;
+  border: 1px solid var(--primary, #3a5486);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary, #3a5486);
+  cursor: pointer;
+  line-height: 32px;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.dr-cancel-btn:hover {
+  background: var(--soft-blue, #f4f7fe);
+}
+
+.dr-save-btn {
+  padding: 8px 16px;
+  background: var(--primary, #3a5486);
+  border: 1px solid var(--primary, #3a5486);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary-foreground, #ffffff);
+  cursor: pointer;
+  line-height: 32px;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.dr-save-btn:hover {
+  opacity: 0.9;
+}
