@@ -142,15 +142,17 @@ export default function EventDetail() {
 
                 <div className="ed-timeline-wrap">
                   {timelineSteps.map((step, i) => (
-                    <div key={step.label} className="ed-step-col" style={i === 0 ? { alignItems: 'flex-start' } : i === timelineSteps.length - 1 ? { alignItems: 'flex-end' } : {}}>
+                    <div key={step.label} className="ed-step-col">
                       <div className="ed-step-track">
-                        {i > 0 && (
-                          <div className={`ed-connector${step.status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
-                        )}
+                        {i === 0
+                          ? <div className="ed-connector" style={{ visibility: 'hidden' }} />
+                          : <div className={`ed-connector${step.status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
+                        }
                         <div className={`ed-step-dot ed-step-dot--${step.status}`} />
-                        {i < timelineSteps.length - 1 && (
-                          <div className={`ed-connector${timelineSteps[i + 1].status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
-                        )}
+                        {i === timelineSteps.length - 1
+                          ? <div className="ed-connector" style={{ visibility: 'hidden' }} />
+                          : <div className={`ed-connector${timelineSteps[i + 1].status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
+                        }
                       </div>
                       <div className="ed-step-labels">
                         <span className="ed-step-time" style={{ color: step.color }}>{step.time}</span>
