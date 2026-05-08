@@ -289,6 +289,11 @@
   top: 0;
   height: 100%;
   border-radius: 8px;
+  animation: db-bar-grow 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes db-bar-grow {
+  from { width: 0 !important; }
 }
 
 .db-metric-time {

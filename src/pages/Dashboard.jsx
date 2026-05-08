@@ -205,7 +205,7 @@ export default function Dashboard() {
                         <div className="db-bar-track">
                           <div
                             className="db-bar-fill"
-                            style={{ width: m.barWidth, background: m.barColor, opacity: m.dimBar ? 0.5 : 1 }}
+                            style={{ width: m.barWidth, background: m.barColor, opacity: m.dimBar ? 0.5 : 1, animationDelay: `${i * 0.15}s` }}
                           />
                         </div>
                         <p className="db-metric-time">{m.time}</p>
