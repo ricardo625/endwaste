@@ -139,7 +139,7 @@
   flex-direction: column;
   gap: 24px;
   position: sticky;
-  top: 32px;
+  top: 0;
   align-self: flex-start;
 }
 
