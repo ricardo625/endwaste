@@ -276,7 +276,7 @@ export default function Dashboard() {
               <div className="db-time-labels">
                 {timeLabels.map((t, i) => <span key={i}>{t}</span>)}
               </div>
-              {timelinesData.map(data => (
+              {timelinesData.filter(d => d.line === selectedLine).map(data => (
                 <TimelineChart key={data.line} data={data} />
               ))}
             </div>
