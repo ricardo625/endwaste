@@ -45,24 +45,76 @@ const alerts = [
 
 const timeLabels = ['12 AM', '3 AM', '6 AM', '9 AM', '12 AM', '12 PM', '3 AM', '6 AM', '9 AM']
 
-const timelineSegments = [
-  { left: '6.1%',   width: '0.2%',  color: 'var(--yellow-color,#d08700)' },
-  { left: '9.8%',   width: '1.25%', color: 'var(--yellow-color,#d08700)' },
-  { left: '21.4%',  width: '0.6%',  color: 'var(--red-color,#e2454c)' },
-  { left: '57.6%',  width: '2.9%',  color: 'var(--red-color,#e2454c)' },
-  { left: '68.97%', width: '5.1%',  color: 'var(--yellow-color,#d08700)' },
-  { left: '41.3%',  width: '3.2%',  color: 'var(--muted-foreground,#121212)', opacity: 0.3 },
-  { left: '86%',    width: '3.5%',  color: 'var(--muted-foreground,#121212)', opacity: 0.3 },
+const timelinesData = [
+  {
+    line: 'Line 1',
+    segments: [
+      { left: '6.1%',   width: '0.2%',  color: 'var(--yellow-color,#d08700)' },
+      { left: '9.8%',   width: '1.25%', color: 'var(--yellow-color,#d08700)' },
+      { left: '21.4%',  width: '0.6%',  color: 'var(--red-color,#e2454c)' },
+      { left: '57.6%',  width: '2.9%',  color: 'var(--red-color,#e2454c)' },
+      { left: '68.97%', width: '5.1%',  color: 'var(--yellow-color,#d08700)' },
+      { left: '41.3%',  width: '3.2%',  color: 'var(--muted-foreground,#121212)', opacity: 0.3 },
+      { left: '86%',    width: '3.5%',  color: 'var(--muted-foreground,#121212)', opacity: 0.3 },
+    ],
+    annotations: [
+      { left: '6.2%',   time: '2:15 AM', label: 'Empty Belt', duration: '15m', color: '#d08700' },
+      { left: '21.7%',  time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#e2454c' },
+      { left: '42.9%',  time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#121212', opacity: 0.5 },
+      { left: '59.05%', time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#e2454c' },
+      { left: '71.52%', time: '2:15 AM', label: 'Empty Belt', duration: '15m', color: '#d08700' },
+      { left: '87.75%', time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#121212', opacity: 0.5 },
+    ],
+  },
+  {
+    line: 'Line 2',
+    segments: [
+      { left: '4.5%',   width: '8.2%',  color: 'var(--red-color,#e2454c)' },
+      { left: '31.0%',  width: '1.8%',  color: 'var(--yellow-color,#d08700)' },
+      { left: '48.5%',  width: '6.4%',  color: 'var(--red-color,#e2454c)' },
+      { left: '63.2%',  width: '2.1%',  color: 'var(--yellow-color,#d08700)' },
+      { left: '74.0%',  width: '4.0%',  color: 'var(--muted-foreground,#121212)', opacity: 0.3 },
+      { left: '88.5%',  width: '5.2%',  color: 'var(--red-color,#e2454c)' },
+    ],
+    annotations: [
+      { left: '4.5%',   time: '1:05 AM', label: 'Downtime',   duration: '2h',  color: '#e2454c' },
+      { left: '31.0%',  time: '7:26 AM', label: 'Empty Belt', duration: '26m', color: '#d08700' },
+      { left: '48.5%',  time: '11:38 AM',label: 'Downtime',   duration: '1h 32m', color: '#e2454c' },
+      { left: '63.2%',  time: '3:10 PM', label: 'Empty Belt', duration: '30m', color: '#d08700' },
+      { left: '74.0%',  time: '5:45 PM', label: 'Planned',    duration: '58m', color: '#121212', opacity: 0.5 },
+      { left: '88.5%',  time: '9:14 PM', label: 'Downtime',   duration: '1h 15m', color: '#e2454c' },
+    ],
+  },
 ]
 
-const timelineAnnotations = [
-  { left: '6.2%',   time: '2:15 AM', label: 'Empty Belt', duration: '15m', color: '#d08700' },
-  { left: '21.7%',  time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#e2454c' },
-  { left: '42.9%',  time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#121212', opacity: 0.5 },
-  { left: '59.05%', time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#e2454c' },
-  { left: '71.52%', time: '2:15 AM', label: 'Empty Belt', duration: '15m', color: '#d08700' },
-  { left: '87.75%', time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#121212', opacity: 0.5 },
-]
+function TimelineChart({ data }) {
+  return (
+    <div className="db-timeline-chart">
+      <span className="db-timeline-line-label">{data.line}</span>
+      <div className="db-timeline-track">
+        <div className="db-timeline-bar-bg" />
+        {data.segments.map((s, i) => (
+          <div
+            key={i}
+            className="db-timeline-seg"
+            style={{ left: s.left, width: s.width, background: s.color, opacity: s.opacity ?? 1 }}
+          />
+        ))}
+      </div>
+      <div className="db-annotations">
+        {data.annotations.map((a, i) => (
+          <div key={i} className="db-ann" style={{ left: a.left }}>
+            <div className="db-ann-line" style={{ borderColor: a.color, opacity: a.opacity ?? 1 }} />
+            <div className="db-ann-dot" style={{ background: a.color, opacity: a.opacity ?? 1 }} />
+            <p className="db-ann-time">{a.time}</p>
+            <p className="db-ann-label">{a.label}</p>
+            <p className="db-ann-dur">{a.duration}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 const lineOptions = ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
 
@@ -224,27 +276,9 @@ export default function Dashboard() {
               <div className="db-time-labels">
                 {timeLabels.map((t, i) => <span key={i}>{t}</span>)}
               </div>
-              <div className="db-timeline-track">
-                <div className="db-timeline-bar-bg" />
-                {timelineSegments.map((s, i) => (
-                  <div
-                    key={i}
-                    className="db-timeline-seg"
-                    style={{ left: s.left, width: s.width, background: s.color, opacity: s.opacity ?? 1 }}
-                  />
-                ))}
-              </div>
-              <div className="db-annotations">
-                {timelineAnnotations.map((a, i) => (
-                  <div key={i} className="db-ann" style={{ left: a.left }}>
-                    <div className="db-ann-line" style={{ borderColor: a.color, opacity: a.opacity ?? 1 }} />
-                    <div className="db-ann-dot" style={{ background: a.color, opacity: a.opacity ?? 1 }} />
-                    <p className="db-ann-time">{a.time}</p>
-                    <p className="db-ann-label">{a.label}</p>
-                    <p className="db-ann-dur">{a.duration}</p>
-                  </div>
-                ))}
-              </div>
+              {timelinesData.map(data => (
+                <TimelineChart key={data.line} data={data} />
+              ))}
             </div>
           </div>
 
