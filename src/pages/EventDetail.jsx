@@ -142,7 +142,7 @@ export default function EventDetail() {
 
                 <div className="ed-timeline-wrap">
                   {timelineSteps.map((step, i) => (
-                    <div key={step.label} className="ed-step-col">
+                    <div key={step.label} className="ed-step-col" style={i === 0 ? { alignItems: 'flex-start' } : i === timelineSteps.length - 1 ? { alignItems: 'flex-end' } : {}}>
                       <div className="ed-step-track">
                         {i > 0 && (
                           <div className={`ed-connector${step.status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
