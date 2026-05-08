@@ -215,7 +215,7 @@ export default function EventDetail() {
                         <div className={`ed-step-dot ed-step-dot--${step.status}`} />
                         {i === event.timelineSteps.length - 1
                           ? <div className="ed-connector" style={{ visibility: 'hidden' }} />
-                          : <div className={`ed-connector${timelineSteps[i + 1].status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
+                          : <div className={`ed-connector${event.timelineSteps[i + 1].status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
                         }
                       </div>
                       <div className="ed-step-labels">
