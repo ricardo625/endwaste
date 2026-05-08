@@ -2,8 +2,7 @@
 .toast-stack {
   position: fixed;
   bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -38,6 +37,7 @@
   font-weight: 400;
   color: var(--foreground, #121212);
   line-height: 32px;
+  text-align: left;
 }
 
 /* ── Undo button ─────────────────────────────────────────── */
