@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 import './Sidebar.css'
 
-const imgAvatar = 'http://localhost:3845/assets/38ab233ed540c618577c001b3a4a83f67e35158a.png'
+import imgAvatar from '../assets/avatar.png'
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
