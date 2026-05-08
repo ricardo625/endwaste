@@ -11,6 +11,7 @@ import {
   Check,
 } from 'lucide-react'
 import Sidebar from '../components/Sidebar.jsx'
+import { useToast } from '../components/Toast.jsx'
 import './EventDetail.css'
 
 const timelineSteps = [
@@ -30,9 +31,23 @@ const subOptions = {
 export default function EventDetail() {
   const navigate = useNavigate()
   const { id } = useParams()
+  const toast = useToast()
   const [classification, setClassification] = useState('unplanned')
   const [subSelections, setSubSelections] = useState({ unplanned: 'Machine failure', planned: null, not: null })
   const [openDropdown, setOpenDropdown] = useState(null)
+
+  const classificationLabels = { unplanned: 'Unplanned Downtime', planned: 'Planned Stop', not: 'Not downtime' }
+
+  function selectClassification(key) {
+    setClassification(key)
+    toast({ message: `${classificationLabels[key]} selected` })
+  }
+
+  function selectSubOption(key, opt) {
+    setSubSelections(s => ({ ...s, [key]: opt }))
+    setOpenDropdown(null)
+    toast({ message: `${opt} selected` })
+  }
 
   useEffect(() => {
     if (!openDropdown) return
@@ -215,7 +230,7 @@ export default function EventDetail() {
                   {/* Unplanned Downtime */}
                   <div
                     className={`ed-class-option ed-class-option--first${classification === 'unplanned' ? ' ed-class-option--selected' : ''}`}
-                    onClick={() => setClassification('unplanned')}
+                    onClick={() => selectClassification('unplanned')}
                   >
                     <div className="ed-class-icon-wrap">
                       <AlertCircle size={32} fill="var(--red-color,#e2454c)" color="white" strokeWidth={2} />
@@ -229,7 +244,7 @@ export default function EventDetail() {
                         {openDropdown === 'unplanned' && (
                           <div className="ed-dropdown-list">
                             {subOptions.unplanned.map(opt => (
-                              <div key={opt} className={`ed-dropdown-item${subSelections.unplanned === opt ? ' ed-dropdown-item--active' : ''}`} onClick={e => { e.stopPropagation(); setSubSelections(s => ({ ...s, unplanned: opt })); setOpenDropdown(null) }}>
+                              <div key={opt} className={`ed-dropdown-item${subSelections.unplanned === opt ? ' ed-dropdown-item--active' : ''}`} onClick={e => { e.stopPropagation(); selectSubOption('unplanned', opt) }}>
                                 {opt}
                               </div>
                             ))}
@@ -243,7 +258,7 @@ export default function EventDetail() {
                   {/* Planned Stop */}
                   <div
                     className={`ed-class-option ed-class-option--middle${classification === 'planned' ? ' ed-class-option--selected' : ''}`}
-                    onClick={() => setClassification('planned')}
+                    onClick={() => selectClassification('planned')}
                   >
                     <div className="ed-class-icon-circle-blue">
                       <Calendar size={24} color="var(--color-blue,#155dfb)" strokeWidth={1.5} />
@@ -257,7 +272,7 @@ export default function EventDetail() {
                         {openDropdown === 'planned' && (
                           <div className="ed-dropdown-list">
                             {subOptions.planned.map(opt => (
-                              <div key={opt} className={`ed-dropdown-item${subSelections.planned === opt ? ' ed-dropdown-item--active' : ''}`} onClick={e => { e.stopPropagation(); setSubSelections(s => ({ ...s, planned: opt })); setOpenDropdown(null) }}>
+                              <div key={opt} className={`ed-dropdown-item${subSelections.planned === opt ? ' ed-dropdown-item--active' : ''}`} onClick={e => { e.stopPropagation(); selectSubOption('planned', opt) }}>
                                 {opt}
                               </div>
                             ))}
@@ -271,7 +286,7 @@ export default function EventDetail() {
                   {/* Not downtime */}
                   <div
                     className={`ed-class-option ed-class-option--last${classification === 'not' ? ' ed-class-option--selected' : ''}`}
-                    onClick={() => setClassification('not')}
+                    onClick={() => selectClassification('not')}
                   >
                     <div className="ed-class-icon-wrap">
                       <div className="ed-radio-circle" />
@@ -285,7 +300,7 @@ export default function EventDetail() {
                         {openDropdown === 'not' && (
                           <div className="ed-dropdown-list">
                             {subOptions.not.map(opt => (
-                              <div key={opt} className={`ed-dropdown-item${subSelections.not === opt ? ' ed-dropdown-item--active' : ''}`} onClick={e => { e.stopPropagation(); setSubSelections(s => ({ ...s, not: opt })); setOpenDropdown(null) }}>
+                              <div key={opt} className={`ed-dropdown-item${subSelections.not === opt ? ' ed-dropdown-item--active' : ''}`} onClick={e => { e.stopPropagation(); selectSubOption('not', opt) }}>
                                 {opt}
                               </div>
                             ))}
