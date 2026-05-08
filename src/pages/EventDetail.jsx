@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -41,6 +41,7 @@ export default function EventDetail() {
   const [subSelections, setSubSelections] = useState({ unplanned: 'Machine failure', planned: null, not: null })
   const [openDropdown, setOpenDropdown] = useState(null)
   const [notes, setNotes] = useState('')
+  const savedNotes = useRef('')
 
   const classificationLabels = { unplanned: 'Unplanned Downtime', planned: 'Planned Stop', not: 'Not downtime' }
 
@@ -333,7 +334,13 @@ export default function EventDetail() {
                       maxLength={250}
                       value={notes}
                       onChange={e => setNotes(e.target.value)}
-                      onBlur={() => { if (notes.trim()) toast({ message: 'Note added' }) }}
+                      onBlur={() => {
+                        const trimmed = notes.trim()
+                        if (trimmed && trimmed !== savedNotes.current) {
+                          toast({ message: savedNotes.current ? 'Note updated' : 'Note added' })
+                          savedNotes.current = trimmed
+                        }
+                      }}
                     />
                     <span className="ed-notes-count">{notes.length}/250</span>
                   </div>
