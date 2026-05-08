@@ -19,11 +19,64 @@ function BreakdownSlider() {
   return <img src={beltImg} alt="Belt status" className="ed-bk-slider" />
 }
 
-const timelineSteps = [
-  { time: '10:42 AM', label: 'Started',    status: 'done',    color: 'var(--red-color,#e2454c)' },
-  { time: '10:42 AM', label: 'Alert Sent', status: 'active',  color: 'var(--foreground,#121212)' },
-  { time: '-',        label: 'Resolved',   status: 'pending', color: 'var(--border-token,#d2d2d2)' },
-  { time: '-',        label: 'Classified', status: 'pending', color: 'var(--border-token,#d2d2d2)' },
+const eventsData = [
+  {
+    id: 1,
+    type: 'Downtime', typeBg: 'var(--soft-red,#fef2f2)', typeBorder: 'var(--border-red,#f5dddd)', typeColor: 'var(--red-color,#e2454c)',
+    eventCode: 'EVT-2405515-10242',
+    detectedAt: 'Detected at 10:42 AM, May 15, 2026 by System',
+    lineName: 'Line 1', lineType: 'Paper Line', dotClass: 'ed-dot-red',
+    duration: '18 min', durationColor: true,
+    startTime: '10:42 AM', startDate: 'May 15, 2026',
+    impact: 'High', impactColor: true,
+    timelineSteps: [
+      { time: '10:42 AM', label: 'Started',    status: 'done',    color: 'var(--red-color,#e2454c)' },
+      { time: '10:42 AM', label: 'Alert Sent', status: 'active',  color: 'var(--foreground,#121212)' },
+      { time: '-',        label: 'Resolved',   status: 'pending', color: 'var(--border-token,#d2d2d2)' },
+      { time: '-',        label: 'Classified', status: 'pending', color: 'var(--border-token,#d2d2d2)' },
+    ],
+    location: 'Main Sorting Area - Section B',
+    description: 'System detected no material movement on the belt',
+    downtimeVal: '18 min', placesImpacted: '-', productionLoss: '-',
+  },
+  {
+    id: 2,
+    type: 'Empty Belt', typeBg: 'var(--soft-yellow,#fefce8)', typeBorder: 'var(--border-yellow,#ede9bd)', typeColor: 'var(--yellow-color,#d08700)',
+    eventCode: 'EVT-2405515-10289',
+    detectedAt: 'Detected at 2:15 PM, May 15, 2026 by System',
+    lineName: 'Line 3', lineType: 'Plastic Line', dotClass: 'ed-dot-gray',
+    duration: '2 hours', durationColor: false,
+    startTime: '2:15 PM', startDate: 'May 15, 2026',
+    impact: 'Medium', impactColor: false,
+    timelineSteps: [
+      { time: '2:15 PM',  label: 'Started',    status: 'done',   color: 'var(--red-color,#e2454c)' },
+      { time: '2:16 PM',  label: 'Alert Sent', status: 'done',   color: 'var(--red-color,#e2454c)' },
+      { time: '4:15 PM',  label: 'Resolved',   status: 'active', color: 'var(--foreground,#121212)' },
+      { time: '-',        label: 'Classified', status: 'pending', color: 'var(--border-token,#d2d2d2)' },
+    ],
+    location: 'Plastic Processing - Section A',
+    description: 'Belt running with no material detected for extended period',
+    downtimeVal: '2 hours', placesImpacted: '2 stations', productionLoss: '~340 kg',
+  },
+  {
+    id: 3,
+    type: 'Planned Stop', typeBg: 'var(--muted,#f5f5f5)', typeBorder: 'var(--border-token,#d2d2d2)', typeColor: 'var(--foreground,#121212)',
+    eventCode: 'EVT-2405515-10301',
+    detectedAt: 'Scheduled at 6:00 AM, May 15, 2026',
+    lineName: 'Line 4', lineType: 'Metal Line', dotClass: 'ed-dot-gray',
+    duration: '10 hours', durationColor: false,
+    startTime: '6:00 AM', startDate: 'May 15, 2026',
+    impact: 'Low', impactColor: false,
+    timelineSteps: [
+      { time: '6:00 AM',  label: 'Started',    status: 'done',   color: 'var(--red-color,#e2454c)' },
+      { time: '6:01 AM',  label: 'Alert Sent', status: 'done',   color: 'var(--red-color,#e2454c)' },
+      { time: '4:00 PM',  label: 'Resolved',   status: 'done',   color: 'var(--red-color,#e2454c)' },
+      { time: '4:05 PM',  label: 'Classified', status: 'active', color: 'var(--foreground,#121212)' },
+    ],
+    location: 'Metal Line - Full Facility',
+    description: 'Scheduled maintenance window for metal line equipment',
+    downtimeVal: '10 hours', placesImpacted: '1 line', productionLoss: '~1.2 t',
+  },
 ]
 
 
@@ -37,6 +90,10 @@ export default function EventDetail() {
   const navigate = useNavigate()
   const { id } = useParams()
   const toast = useToast()
+  const currentId = parseInt(id) || 1
+  const event = eventsData.find(e => e.id === currentId) ?? eventsData[0]
+  const hasPrev = currentId > 1
+  const hasNext = currentId < eventsData.length
   const [classification, setClassification] = useState('unplanned')
   const [subSelections, setSubSelections] = useState({ unplanned: 'Machine failure', planned: null, not: null })
   const [openDropdown, setOpenDropdown] = useState(null)
@@ -79,17 +136,17 @@ export default function EventDetail() {
             <div className="ed-title-row">
               <div className="ed-title-group">
                 <h1 className="ed-title">Event Detail</h1>
-                <span className="ed-type-badge">Downtime</span>
+                <span className="ed-type-badge" style={{ background: event.typeBg, borderColor: event.typeBorder, color: event.typeColor }}>{event.type}</span>
               </div>
               <div className="ed-meta-row">
-                <span className="ed-meta">EVT-2405515-10242</span>
-                <span className="ed-meta">Detected at 10:42 AM, May 15, 2025 by System</span>
+                <span className="ed-meta">{event.eventCode}</span>
+                <span className="ed-meta">{event.detectedAt}</span>
               </div>
             </div>
           </div>
           <div className="ed-nav-btns">
-            <button className="ed-nav-btn"><ChevronLeft size={18} /> Previous</button>
-            <button className="ed-nav-btn">Next <ChevronRight size={18} /></button>
+            <button className="ed-nav-btn" disabled={!hasPrev} onClick={() => navigate(`/dashboard/event/${currentId - 1}`)} style={{ opacity: hasPrev ? 1 : 0.4 }}><ChevronLeft size={18} /> Previous</button>
+            <button className="ed-nav-btn" disabled={!hasNext} onClick={() => navigate(`/dashboard/event/${currentId + 1}`)} style={{ opacity: hasNext ? 1 : 0.4 }}>Next <ChevronRight size={18} /></button>
           </div>
         </div>
 
@@ -104,11 +161,11 @@ export default function EventDetail() {
               <div className="ed-info-row">
                 <div className="ed-info-line">
                   <div className="ed-line-name-row">
-                    <span className="ed-dot ed-dot-red" />
-                    <span className="ed-line-name">Line {id || 2}</span>
+                    <span className={`ed-dot ${event.dotClass}`} />
+                    <span className="ed-line-name">{event.lineName}</span>
                   </div>
                   <div className="ed-line-name-row">
-                    <span className="ed-line-sub">Paper Line</span>
+                    <span className="ed-line-sub">{event.lineType}</span>
                   </div>
                 </div>
 
@@ -116,16 +173,16 @@ export default function EventDetail() {
 
                 <div className="ed-info-stat">
                   <span className="ed-stat-label">Duration</span>
-                  <span className="ed-stat-value ed-stat-red">18 min</span>
-                  <span className="ed-stat-note">(and ongoing)</span>
+                  <span className={`ed-stat-value${event.durationColor ? ' ed-stat-red' : ''}`}>{event.duration}</span>
+                  {event.durationColor && <span className="ed-stat-note">(and ongoing)</span>}
                 </div>
 
                 <div className="ed-info-sep" />
 
                 <div className="ed-info-stat">
                   <span className="ed-stat-label">Start Time</span>
-                  <span className="ed-stat-value">10:42 AM</span>
-                  <span className="ed-stat-label">May 15, 2026</span>
+                  <span className="ed-stat-value">{event.startTime}</span>
+                  <span className="ed-stat-label">{event.startDate}</span>
                 </div>
 
                 <div className="ed-info-sep" />
@@ -133,8 +190,8 @@ export default function EventDetail() {
                 <div className="ed-info-stat">
                   <span className="ed-stat-label">Current Impact</span>
                   <div className="ed-impact-row">
-                    <BarChart2 size={22} color="var(--red-color,#e2454c)" />
-                    <span className="ed-stat-value ed-stat-red">High</span>
+                    <BarChart2 size={22} color={event.impactColor ? 'var(--red-color,#e2454c)' : 'var(--foreground,#121212)'} />
+                    <span className={`ed-stat-value${event.impactColor ? ' ed-stat-red' : ''}`}>{event.impact}</span>
                   </div>
                 </div>
               </div>
@@ -148,7 +205,7 @@ export default function EventDetail() {
                 </div>
 
                 <div className="ed-timeline-wrap">
-                  {timelineSteps.map((step, i) => (
+                  {event.timelineSteps.map((step, i) => (
                     <div key={step.label} className="ed-step-col">
                       <div className="ed-step-track">
                         {i === 0
@@ -156,7 +213,7 @@ export default function EventDetail() {
                           : <div className={`ed-connector${step.status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
                         }
                         <div className={`ed-step-dot ed-step-dot--${step.status}`} />
-                        {i === timelineSteps.length - 1
+                        {i === event.timelineSteps.length - 1
                           ? <div className="ed-connector" style={{ visibility: 'hidden' }} />
                           : <div className={`ed-connector${timelineSteps[i + 1].status === 'pending' ? ' ed-connector-gray' : ' ed-connector-red'}`} />
                         }
@@ -185,20 +242,20 @@ export default function EventDetail() {
                 <div className="ed-breakdown-table">
                   <div className="ed-breakdown-row ed-breakdown-row--type">
                     <span className="ed-breakdown-key">Event type</span>
-                    <span className="ed-breakdown-val">Downtime</span>
+                    <span className="ed-breakdown-val">{event.type}</span>
                     <BreakdownSlider />
                   </div>
                   <div className="ed-breakdown-row">
                     <span className="ed-breakdown-key">Affected Line</span>
-                    <span className="ed-breakdown-val">Line {id || 2} - Paper Line</span>
+                    <span className="ed-breakdown-val">{event.lineName} - {event.lineType}</span>
                   </div>
                   <div className="ed-breakdown-row">
                     <span className="ed-breakdown-key">Location</span>
-                    <span className="ed-breakdown-val">Main Sorting Area - Section B</span>
+                    <span className="ed-breakdown-val">{event.location}</span>
                   </div>
                   <div className="ed-breakdown-row">
                     <span className="ed-breakdown-key">Description</span>
-                    <span className="ed-breakdown-val">System detected no material movement on the belt</span>
+                    <span className="ed-breakdown-val">{event.description}</span>
                   </div>
                 </div>
               </div>
@@ -212,15 +269,15 @@ export default function EventDetail() {
               <div className="ed-impact-body">
                 <div className="ed-impact-row-item">
                   <span className="ed-breakdown-key">Downtime</span>
-                  <span className="ed-stat-value ed-stat-red">18 min</span>
+                  <span className={`ed-stat-value${event.durationColor ? ' ed-stat-red' : ''}`}>{event.downtimeVal}</span>
                 </div>
                 <div className="ed-impact-row-item">
                   <span className="ed-breakdown-key">Places Impacted</span>
-                  <span className="ed-breakdown-val">-</span>
+                  <span className="ed-breakdown-val">{event.placesImpacted}</span>
                 </div>
                 <div className="ed-impact-row-item">
                   <span className="ed-breakdown-key">Est. Production Loss</span>
-                  <span className="ed-breakdown-val">-</span>
+                  <span className="ed-breakdown-val">{event.productionLoss}</span>
                 </div>
               </div>
             </div>
