@@ -40,6 +40,7 @@ export default function EventDetail() {
   const [classification, setClassification] = useState('unplanned')
   const [subSelections, setSubSelections] = useState({ unplanned: 'Machine failure', planned: null, not: null })
   const [openDropdown, setOpenDropdown] = useState(null)
+  const [notes, setNotes] = useState('')
 
   const classificationLabels = { unplanned: 'Unplanned Downtime', planned: 'Planned Stop', not: 'Not downtime' }
 
@@ -328,10 +329,13 @@ export default function EventDetail() {
                   <div className="ed-notes-field">
                     <textarea
                       className="ed-notes-input"
-                      placeholder="Add a name"
+                      placeholder="Add a note"
                       maxLength={250}
+                      value={notes}
+                      onChange={e => setNotes(e.target.value)}
+                      onBlur={() => { if (notes.trim()) toast({ message: 'Note added' }) }}
                     />
-                    <span className="ed-notes-count">0/250</span>
+                    <span className="ed-notes-count">{notes.length}/250</span>
                   </div>
                 </div>
 
