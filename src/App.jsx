@@ -112,7 +112,7 @@ function Home() {
 
 function AppShell() {
   const location = useLocation()
-  const isDashboard = location.pathname.startsWith('/dashboard')
+  const isDashboard = location.pathname === '/' || location.pathname.startsWith('/dashboard')
 
   return (
     <>
@@ -130,7 +130,7 @@ function AppShell() {
         </nav>
       )}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/guidelines" element={<Guidelines />} />
         <Route path="/dashboard/notifications" element={<Notifications />} />
         <Route path="/dashboard/schedule" element={<Schedule />} />
