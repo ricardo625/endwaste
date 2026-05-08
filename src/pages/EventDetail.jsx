@@ -10,25 +10,13 @@ import {
   ChevronDown,
   Check,
 } from 'lucide-react'
+import beltImg from '../assets/belt.svg'
 import Sidebar from '../components/Sidebar.jsx'
 import { useToast } from '../components/Toast.jsx'
 import './EventDetail.css'
 
 function BreakdownSlider() {
-  return (
-    <div className="ed-bk-slider">
-      <div className="ed-bk-slider-track-row">
-        <span className="ed-bk-handle" />
-        <span className="ed-bk-handle" />
-      </div>
-      <div className="ed-bk-slider-bar-row">
-        <div className="ed-bk-slider-bar" />
-      </div>
-      <div className="ed-bk-slider-alert">
-        <AlertCircle size={32} fill="var(--red-color,#e2454c)" color="white" strokeWidth={2} />
-      </div>
-    </div>
-  )
+  return <img src={beltImg} alt="Belt status" className="ed-bk-slider" />
 }
 
 const timelineSteps = [
