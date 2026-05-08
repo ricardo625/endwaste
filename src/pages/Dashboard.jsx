@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar.jsx'
 import './Dashboard.css'
@@ -63,8 +64,20 @@ const timelineAnnotations = [
   { left: '87.75%', time: '2:15 AM', label: 'Downtime',   duration: '15m', color: '#121212', opacity: 0.5 },
 ]
 
+const lineOptions = ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
+
 export default function Dashboard() {
   const navigate = useNavigate()
+  const [selectedLine, setSelectedLine] = useState('Line 1')
+  const [lineDropOpen, setLineDropOpen] = useState(false)
+  const lineDropRef = useRef(null)
+
+  useEffect(() => {
+    if (!lineDropOpen) return
+    const close = e => { if (lineDropRef.current && !lineDropRef.current.contains(e.target)) setLineDropOpen(false) }
+    document.addEventListener('click', close)
+    return () => document.removeEventListener('click', close)
+  }, [lineDropOpen])
 
   return (
     <div className="dashboard-layout">
@@ -188,9 +201,24 @@ export default function Dashboard() {
                 <p className="db-card-title">Live Timeline</p>
                 <div className="db-today-pill">Today</div>
               </div>
-              <button className="db-line-select">
-                Line 1 <IconChevronDown />
-              </button>
+              <div className="db-line-select-wrap" ref={lineDropRef}>
+                <button className="db-line-select" onClick={() => setLineDropOpen(o => !o)}>
+                  {selectedLine} <IconChevronDown />
+                </button>
+                {lineDropOpen && (
+                  <div className="db-line-dropdown">
+                    {lineOptions.map(opt => (
+                      <div
+                        key={opt}
+                        className={`db-line-drop-item${selectedLine === opt ? ' db-line-drop-item--active' : ''}`}
+                        onClick={() => { setSelectedLine(opt); setLineDropOpen(false) }}
+                      >
+                        {opt}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             <div className="db-timeline-body">
               <div className="db-time-labels">
