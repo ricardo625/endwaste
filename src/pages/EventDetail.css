@@ -425,6 +425,56 @@
   font-weight: 400;
 }
 
+.ed-breakdown-row--type {
+  align-items: center;
+}
+
+/* ── Breakdown slider ────────────────────────────────────── */
+.ed-bk-slider {
+  position: relative;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.ed-bk-slider-track-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ed-bk-handle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid var(--border-token, #d2d2d2);
+  flex-shrink: 0;
+}
+
+.ed-bk-slider-bar-row {
+  padding: 0 12px;
+}
+
+.ed-bk-slider-bar {
+  height: 8px;
+  background: var(--border-token, #d2d2d2);
+  border-radius: 999px;
+}
+
+.ed-bk-slider-alert {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ── Impact card ─────────────────────────────────────────── */
 .ed-impact-body {
   padding: 24px;

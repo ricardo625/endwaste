@@ -14,6 +14,23 @@ import Sidebar from '../components/Sidebar.jsx'
 import { useToast } from '../components/Toast.jsx'
 import './EventDetail.css'
 
+function BreakdownSlider() {
+  return (
+    <div className="ed-bk-slider">
+      <div className="ed-bk-slider-track-row">
+        <span className="ed-bk-handle" />
+        <span className="ed-bk-handle" />
+      </div>
+      <div className="ed-bk-slider-bar-row">
+        <div className="ed-bk-slider-bar" />
+      </div>
+      <div className="ed-bk-slider-alert">
+        <AlertCircle size={32} fill="var(--red-color,#e2454c)" color="white" strokeWidth={2} />
+      </div>
+    </div>
+  )
+}
+
 const timelineSteps = [
   { time: '10:42 AM', label: 'Started',    status: 'done',    color: 'var(--red-color,#e2454c)' },
   { time: '10:42 AM', label: 'Alert Sent', status: 'active',  color: 'var(--foreground,#121212)' },
@@ -176,9 +193,10 @@ export default function EventDetail() {
               </div>
               <div className="ed-breakdown-body">
                 <div className="ed-breakdown-table">
-                  <div className="ed-breakdown-row">
+                  <div className="ed-breakdown-row ed-breakdown-row--type">
                     <span className="ed-breakdown-key">Event type</span>
                     <span className="ed-breakdown-val">Downtime</span>
+                    <BreakdownSlider />
                   </div>
                   <div className="ed-breakdown-row">
                     <span className="ed-breakdown-key">Affected Line</span>
