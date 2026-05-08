@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { X, Plus, Clock, Trash2, ChevronDown, Check } from 'lucide-react'
+import { useToast } from './Toast.jsx'
 import './ScheduleDrawer.css'
 
 function generateTimes() {
@@ -99,6 +100,7 @@ function TimeRow({ label, item, onChange, onDelete }) {
 }
 
 export default function ScheduleDrawer({ line, onClose }) {
+  const toast = useToast()
   const [lineName, setLineName] = useState(line?.type ?? '')
   const [shifts, setShifts] = useState(defaultShifts)
   const [breaks, setBreaks] = useState(defaultBreaks)
@@ -239,7 +241,7 @@ export default function ScheduleDrawer({ line, onClose }) {
           </div>
           <div className="dr-footer-right">
             <button className="dr-cancel-btn" onClick={onClose}>Cancel</button>
-            <button className="dr-save-btn">Save Changes</button>
+            <button className="dr-save-btn" onClick={() => { toast({ message: 'Changes saved successfully' }); onClose() }}>Save Changes</button>
           </div>
         </div>
 
